@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แบบประเมินความพึงพอใจ - Meeting Reunion</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #4A90E2;
+            --light-blue: #E1F0FF;
+            --primary-green: #8CC63F;
+            --soft-pink: #FF8DA1;
+            --text-dark: #333333;
+            --white: #FFFFFF;
+            --gray-light: #f1f5f9;
+            --star-color: #fbbf24;
+        }
+
+        body {
+            font-family: 'Kanit', sans-serif;
+            background: linear-gradient(135deg, var(--light-blue) 0%, #ffffff 100%);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .form-container {
+            background-color: var(--white);
+            width: 100%;
+            max-width: 650px;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(74, 144, 226, 0.15);
+            overflow: hidden;
+            border: 2px solid var(--light-blue);
+        }
+
+        .form-header {
+            background: var(--primary-green);
+            color: var(--white);
+            padding: 30px 20px;
+            text-align: center;
+            border-bottom: 5px solid var(--primary-blue);
+        }
+
+        .form-header h1 {
+            margin: 0;
+            font-size: 26px;
+            font-weight: 600;
+        }
+
+        .form-header p {
+            margin: 10px 0 0 0;
+            font-size: 16px;
+            font-weight: 300;
+        }
+
+        .form-body {
+            padding: 30px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary-blue);
+            border-bottom: 2px dashed var(--light-blue);
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+
+        .section-title:first-child {
+            margin-top: 0;
+        }
+
+        /* ส่วนของการให้คะแนน */
+        .rating-group {
+            margin-bottom: 15px;
+            background-color: var(--gray-light);
+            padding: 15px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .rating-label {
+            font-weight: 500;
+            margin-bottom: 5px;
+            width: 100%;
+        }
+
+        @media(min-width: 500px) {
+            .rating-label {
+                width: 40%;
+                margin-bottom: 0;
+            }
+        }
+
+        .stars-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .stars-container label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .stars-container input[type="radio"] {
+            accent-color: var(--primary-blue);
+            transform: scale(1.2);
+            margin-bottom: 5px;
+        }
+
+        /* ส่วนของการพิมพ์ข้อความ */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+
+        .form-group span.sub-text {
+            display: block;
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-family: 'Kanit', sans-serif;
+            font-size: 15px;
+            box-sizing: border-box;
+            transition: 0.3s;
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            background-color: var(--light-blue);
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            font-family: 'Kanit', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            box-shadow: 0 4px 6px rgba(74, 144, 226, 0.3);
+        }
+
+        .submit-btn:hover {
+            background-color: var(--primary-green);
+            transform: translateY(-2px);
+        }
+
+        .submit-btn:disabled {
+            background-color: #cbd5e1;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <header class="form-header">
+            <h1>📝 แบบประเมินกิจกรรม<br>Meeting Reunion</h1>
+            <p>ความคิดเห็นของคุณสำคัญมาก เพื่อให้งานครั้งต่อไปดียิ่งขึ้น!</p>
+        </header>
+
+        <form class="form-body" id="feedbackForm">
+
+            <!-- ส่วนที่ 1: ให้คะแนน -->
+            <div class="section-title">⭐ ส่วนที่ 1: ความพึงพอใจโดยรวม (1 = น้อยสุด, 5 = มากสุด)</div>
+            
+            <div class="rating-group">
+                <div class="rating-label">1. รูปแบบกิจกรรม</div>
+                <div class="stars-container">
+                    <label><input type="radio" name="rate_activity" value="1" required>1</label>
+                    <label><input type="radio" name="rate_activity" value="2">2</label>
+                    <label><input type="radio" name="rate_activity" value="3">3</label>
+                    <label><input type="radio" name="rate_activity" value="4">4</label>
+                    <label><input type="radio" name="rate_activity" value="5">5</label>
+                </div>
+            </div>
+
+            <div class="rating-group">
+                <div class="rating-label">2. สถานที่จัดงาน</div>
+                <div class="stars-container">
+                    <label><input type="radio" name="rate_venue" value="1" required>1</label>
+                    <label><input type="radio" name="rate_venue" value="2">2</label>
+                    <label><input type="radio" name="rate_venue" value="3">3</label>
+                    <label><input type="radio" name="rate_venue" value="4">4</label>
+                    <label><input type="radio" name="rate_venue" value="5">5</label>
+                </div>
+            </div>
+
+            <div class="rating-group">
+                <div class="rating-label">3. อาหารและเครื่องดื่ม</div>
+                <div class="stars-container">
+                    <label><input type="radio" name="rate_food" value="1" required>1</label>
+                    <label><input type="radio" name="rate_food" value="2">2</label>
+                    <label><input type="radio" name="rate_food" value="3">3</label>
+                    <label><input type="radio" name="rate_food" value="4">4</label>
+                    <label><input type="radio" name="rate_food" value="5">5</label>
+                </div>
+            </div>
+
+            <div class="rating-group">
+                <div class="rating-label">4. บรรยากาศภายในงาน</div>
+                <div class="stars-container">
+                    <label><input type="radio" name="rate_vibes" value="1" required>1</label>
+                    <label><input type="radio" name="rate_vibes" value="2">2</label>
+                    <label><input type="radio" name="rate_vibes" value="3">3</label>
+                    <label><input type="radio" name="rate_vibes" value="4">4</label>
+                    <label><input type="radio" name="rate_vibes" value="5">5</label>
+                </div>
+            </div>
+
+            <!-- ส่วนที่ 2: พิมพ์ข้อเสนอแนะ -->
+            <div class="section-title">💡 ส่วนที่ 2: ข้อเสนอแนะเพื่อพัฒนา</div>
+
+            <div class="form-group">
+                <label>1) Winning 🏆</label>
+                <span class="sub-text">ชอบอะไรบ้างในกิจกรรมวันนี้?</span>
+                <textarea name="winning" rows="3" placeholder="พิมพ์สิ่งที่คุณประทับใจ..." required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>2) Learning 🧠</label>
+                <span class="sub-text">ถ้าปรับดีขึ้น อยากปรับส่วนไหน?</span>
+                <textarea name="learning" rows="3" placeholder="พิมพ์สิ่งที่คุณอยากให้ปรับปรุง..." required></textarea>
+            </div>
+
+            <div class="section-title">🚀 ส่วนที่ 3: ก้าวต่อไป (Future)</div>
+            
+            <div class="form-group">
+                <label>3) ครั้งต่อไปอยากให้...</label>
+                <input type="text" name="future_when" placeholder="📅 จัดเมื่อไหร่ / ช่วงไหน?" style="margin-bottom: 10px;" required>
+                <input type="text" name="future_where" placeholder="📍 จัดที่ไหนดี?" style="margin-bottom: 10px;" required>
+                <textarea name="future_what" rows="2" placeholder="✨ อยากได้ / อยากเห็นอะไรในงานรอบหน้า?" required></textarea>
+            </div>
+
+            <div class="section-title">🙌 ส่วนที่ 4: อาสาสมัคร (Volunteers)</div>
+
+            <div class="form-group">
+                <label>4) อยากมีส่วนร่วมในการเตรียมงานครั้งหน้า</label>
+                <span class="sub-text">เรื่องอะไรบ้างที่คุณอยากช่วย? (เว้นว่างได้หากยังไม่สะดวก)</span>
+                <textarea name="volunteer" rows="2" placeholder="เช่น ช่วยหาสถานที่, ช่วยออกแบบรูปภาพ, พิธีกร ฯลฯ"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>ชื่อผู้ประเมิน (ลงชื่อหรือไม่ลงก็ได้)</label>
+                <input type="text" name="reviewer_name" placeholder="ชื่อ / ชื่อเล่น ของคุณ">
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">ส่งแบบประเมิน 💖</button>
+            
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+            e.preventDefault(); 
+            
+            const btn = document.getElementById('submitBtn');
+            const originalText = btn.innerText;
+            btn.innerText = 'กำลังส่งแบบประเมิน...';
+            btn.disabled = true;
+
+            const formData = new URLSearchParams(new FormData(this));
+
+            // ⚠️ นำ URL จาก Apps Script แผ่นใหม่ มาใส่ตรงนี้
+            const WEB_APP_URL = 'ใส่_URL_ที่ได้จาก_Google_Apps_Script_ไฟล์ใหม่_ตรงนี้';
+
+            fetch(WEB_APP_URL, {
+                method: 'POST',
+                body: formData,
+                mode: 'no-cors'
+            })
+            .then(() => {
+                alert('ขอบคุณสำหรับคำติชมและข้อเสนอแนะครับ! 🙏');
+                this.reset(); // ล้างข้อมูล
+                window.scrollTo(0, 0); // เลื่อนหน้าจอกลับไปบนสุด
+            })
+            .catch(error => {
+                alert('เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง');
+            })
+            .finally(() => {
+                btn.innerText = originalText;
+                btn.disabled = false;
+            });
+        });
+    </script>
+
+</body>
+</html>
